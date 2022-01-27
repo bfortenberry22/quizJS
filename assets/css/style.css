@@ -1,0 +1,28 @@
+/* styling for pg title */
+.page-title {
+    color: #082e68;
+    margin: auto;
+    width: 50%;
+    font-size: 4.5rem;
+    text-align: center;
+}
+
+/* styling for the information line */
+.info-line {
+    margin-inline: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* styling for the "BEGIN" button */
+.btn {
+    padding: 40px 100px;
+    background: #082e68;
+    font-size: 2.2rem;
+    color:rgb(226, 224, 70);
+    border-radius: 12px;
+    margin: auto;
+    display:flex;
+    justify-content:space-around;
+  }

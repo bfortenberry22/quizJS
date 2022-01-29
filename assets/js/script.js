@@ -1,8 +1,27 @@
-//link items from html
+//link items to html
 var beginButton = document.querySelector("#start-quiz");
+var questionBox = document.querySelector ("#question-box");
+var answersBox = document.querySelector("#answerChoices");
 
 
 //list of questions
+var jsQuestions = [
+    {
+        question: "1. This is a question? The answer is C.",
+        answers: ['A. Option A', 'B. Option B', 'C. Option C', 'D. Option D'],
+        correctAns : "C"
+    },
+    {
+        question: "2. This is the second question? The answer is B.",
+        answers: ['A. Option A', 'B. Option B', 'C. Option C', 'D. Option D'],
+        correctAns : "B"
+    },
+    {
+        question: "3. This is the Third question? The answer is C.",
+        answers: ['A. Option A', 'B. Option B', 'C. Option C', 'D. Option D'],
+        correctAns : "B"
+    },
+]
 
 //main function to begin the quiz
 var quizBegin= function (){
@@ -16,13 +35,29 @@ var quizBegin= function (){
     timeKeeper();
 
     //function to run the quiz
-    quizTime();
+    quizTime(0);
 };
 
-var quizTime = function(){
+//displays each question and answer
+var displayQA = function (questionNum){
+    //add the question to the question box
+    var question = jsQuestions[questionNum].question;
+    questionBox.append(question);
 
+    //add the answer options to the question box
+    for(var i = 0; i < jsQuestions[questionNum].answers. length; i++){
+        var ansOptions = jsQuestions[questionNum].answers[i];
+        var ansList = document.createElement('li');
+        ansList.innerText= ansOptions;
+        answersBox.appendChild(ansList);
+    }
+
+};
+
+var quizTime = function(questionNum){
+    if (questionNum < jsQuestions.length){
     // function to display  first question and answer
-    displayQA();
+    displayQA(questionNum);
 
     //function to add dropdown/submit button and check answer
     userInput();
@@ -32,12 +67,14 @@ var quizTime = function(){
 
     //function to clear and begin again
     newQuestion();
+    }
+    //when all questions are done end quiz
+    else{
+        endQuiz;
+    }
 };
 
-//displays each question and answer
-var displayQA = function (){
 
-};
 
 //function to add dropdown/submit button and check answer
 var userInput = function(){

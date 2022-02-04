@@ -8,19 +8,19 @@ var inputBox = document.querySelector("#userAns");
 //list of questions
 var jsQuestions = [
     {
+        correctAns: "C",
         question: "1. This is a question? The answer is C.",
-        answers: ['A. Option A', 'B. Option B', 'C. Option C', 'D. Option D'],
-        correctAns : "C"
+        answers: ['A. Option 1A', 'B. Option 1B', 'C. Option 1C', 'D. Option 1D'],
     },
     {
+        correctAns: "B",
         question: "2. This is the second question? The answer is B.",
         answers: ['A. Option A', 'B. Option B', 'C. Option C', 'D. Option D'],
-        correctAns : "B"
     },
     {
+        correctAns: "A",
         question: "3. This is the Third question? The answer is C.",
         answers: ['A. Option A', 'B. Option B', 'C. Option C', 'D. Option D'],
-        correctAns : "B"
     },
 ]
 
@@ -41,46 +41,66 @@ var quizBegin= function (){
 
 //function to run the quiz questions and accept answers
 var quizTime = function(questionNum){
-    if (questionNum < jsQuestions.length){
-    // function to display  first question and answer
-    displayQA(questionNum);
+    
+    if (questionNum < jsQuestions.length) {
 
-    //function to add dropdown/submit button and check answer
-    userInput();
+        // function to display question
+        var question = jsQuestions[questionNum].question;
+        question.class = "questionDis";
+        questionBox.innerHTML=question;
 
-    //functon for response to right or wrong answer
-    ansResponse();
+        //add the answer options to the question box
+        for(var i = 0; i < jsQuestions[questionNum].answers. length; i++){
+            var ansOptions = jsQuestions[questionNum].answers[i];
+            var ansList = document.createElement('li');
+            ansList.innerText= ansOptions;
+            answersBox.appendChild(ansList);
+        };
 
-    //function to clear and begin again
-    newQuestion();
+        //function to add dropdown 
+        userInput();
+    
+        //submit button to check ans
+        var submitButton = document.createElement("button");
+        submitButton.textContent = "Submit";
+        submitButton.className = "submitBtn";
+        submitButton.id ="btnSubmit";
+        inputBox.appendChild(submitButton);
+
+        //function to check
+        var checkAnswer = function (){
+            var inputAns = document.querySelector("select[name='selected']").value;
+            var correct = jsQuestions[questionNum].correctAns;
+            console.log("User's anser:" + inputAns);
+            console.log("Correct Answer: " + correct);
+            if (inputAns === correct){
+                console.log("correct");
+            }
+            else {
+                console.log("wrong");
+            };
+            // var n = questionNum ;
+            // console.log(n)
+            inputBox.innerHTML='';
+            answersBox.innerHTML = '';
+            quizTime(questionNum +1);
+        };
+        //check answers after button is clicked
+        submitButton.addEventListener("click", checkAnswer);
+        
+        
+    } else{
+        return;
     }
-    //when all questions are done end quiz
-    else{
-        endQuiz;
-    }
-};
-
-//displays each question and answer
-var displayQA = function (questionNum){
-    //add the question to the question box
-    var question = jsQuestions[questionNum].question;
-    questionBox.append(question);
-
-    //add the answer options to the question box
-    for(var i = 0; i < jsQuestions[questionNum].answers. length; i++){
-        var ansOptions = jsQuestions[questionNum].answers[i];
-        var ansList = document.createElement('li');
-        ansList.innerText= ansOptions;
-        answersBox.appendChild(ansList);
-    }
-
-};
+};  
 
 //function to add dropdown/submit button and check answer
-var userInput = function(){
+var userInput = function(questionNum){
     //create dropdown
-    var userChoices = document.createElement("select");
     var userAnsOpt = ['Select Answer', 'A', 'B', 'C', 'D']
+    var userChoices = document.createElement("select");
+    userChoices.name="selected";
+
     for (var h =0; h < userAnsOpt.length; h++){
         var option = document.createElement("option");
         option.value= userAnsOpt[h];
@@ -89,34 +109,19 @@ var userInput = function(){
         userChoices.append(option);
     }
     //append to input box
-    inputBox.append(userChoices);
-
-    //create submit button
-    var submitButton = document.createElement("button");
-    submitButton.textContent = "Submit";
-    submitButton.className = "submitBtn";
-    inputBox.appendChild(submitButton);
-};
-
-
-//function to respond to right or wrong ans
-var ansResponse = function (input){
-
-};
-
-//function to clear old question and display new
-var newQuestion = function (){
-
+    inputBox.append(userChoices); 
 };
 
 //functin to keep time
 var timeKeeper =function (){
 
 };
+
 //function to end quiz and submit score
 var endQuiz = function(){
 
 };
+
 //function to store high scores
 var highScoreStore = function(){
 

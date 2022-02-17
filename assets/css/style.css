@@ -14,7 +14,10 @@
     flex-wrap: wrap;
     justify-content: space-between;
 }
-
+.time-box{
+    display: flex;
+    justify-content: space-around;
+}
 /* styling for the "BEGIN" button */
 .btn {
     padding: 40px 100px;

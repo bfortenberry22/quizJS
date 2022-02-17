@@ -3,6 +3,7 @@ var beginButton = document.querySelector("#start-quiz");
 var questionBox = document.querySelector ("#question-box");
 var answersBox = document.querySelector("#answerChoices");
 var inputBox = document.querySelector("#userAns");
+var timeLeft = 600;
 
 
 //list of questions
@@ -32,7 +33,7 @@ var quizBegin= function (){
     //remove Begin Button
     beginButton.remove();
 
-    //functiion to keep time
+    // functiion to keep time
     timeKeeper();
 
     //function to run the quiz
@@ -67,7 +68,7 @@ var quizTime = function(questionNum){
         submitButton.id ="btnSubmit";
         inputBox.appendChild(submitButton);
 
-        //function to check
+        //function to check. clear, and provide a new question
         var checkAnswer = function (){
             var inputAns = document.querySelector("select[name='selected']").value;
             var correct = jsQuestions[questionNum].correctAns;
@@ -77,10 +78,11 @@ var quizTime = function(questionNum){
                 console.log("correct");
             }
             else {
-                console.log("wrong");
+                console.log("wrong")
+                wrongAnswer();
             };
-            // var n = questionNum ;
-            // console.log(n)
+
+            questionBox.innerHTML='';
             inputBox.innerHTML='';
             answersBox.innerHTML = '';
             quizTime(questionNum +1);
@@ -94,7 +96,7 @@ var quizTime = function(questionNum){
     }
 };  
 
-//function to add dropdown/submit button and check answer
+//function to add dropdown/submit button
 var userInput = function(questionNum){
     //create dropdown
     var userAnsOpt = ['Select Answer', 'A', 'B', 'C', 'D']
@@ -112,15 +114,31 @@ var userInput = function(questionNum){
     inputBox.append(userChoices); 
 };
 
-//functin to keep time
-var timeKeeper =function (){
-
+ 
+// function to display time
+var timeKeeper =function (){ 
+    display=document.querySelector("#count-down");
+    setInterval(function(){
+        if(timeLeft>0){
+            timeLeft = timeLeft -1;
+            var minLeft = Math.floor(timeLeft/60);
+            console.log(minLeft);
+            var secLeft = timeLeft % 60
+            var disTime = minLeft + ":" + secLeft;
+            display.innerHTML = disTime;
+        }else{
+            alert("TIME IS UP!")
+        }
+    }, 1000)
 };
+//function to deduct time
+var wrongAnswer=function(){
+    timeLeft = timeLeft-10;
+}
 
 //function to end quiz and submit score
-var endQuiz = function(){
-
-};
+// function endQuiz() {
+// }
 
 //function to store high scores
 var highScoreStore = function(){

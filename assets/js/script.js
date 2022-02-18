@@ -4,6 +4,8 @@ var questionBox = document.querySelector ("#question-box");
 var answersBox = document.querySelector("#answerChoices");
 var inputBox = document.querySelector("#userAns");
 var disCheckEL = document.querySelector("#rightOrWrong");
+var disTimer = document.querySelector(".count-down");
+var submitScoreEl = document.querySelector(".submitScore");
 var timeLeft = 60;
 
 
@@ -113,19 +115,17 @@ var userInput = function(questionNum){
 
  
 // function to display time
-var timeKeeper =function (){ 
-    display=document.querySelector(".count-down");
-    setInterval(function(){
+var timeKeeper =function (){
+    window.myTimer = setInterval(function(){
         if(timeLeft>0){
             timeLeft = timeLeft -1;
             var minLeft = Math.floor(timeLeft/60);
-            // console.log(minLeft);
             var secLeft = timeLeft % 60
             var disTime = minLeft + ":" + secLeft;
-            display.innerHTML = disTime;
+            disTimer.innerHTML = disTime;
             return timeLeft;
         }else{
-            endQuiz(0);
+            endQuiz();
         }
     }, 1000)
 };
@@ -138,23 +138,19 @@ var wrongAnswer=function(){
 
 //function to end quiz and submit score
 function endQuiz() {
-    var timeScore = timeLeft;
+    //save time
+    var timeScore = timeLeft +10;
     console.log(timeScore);
-    questionBox.innerHTML='FINSHED!';
-    answersBox.innerHTML = 'Please enter you initials to save your score.';
-    //text area for initials
-    var initals = document.createElement("textArea");
-    initals.className="userID";
-    answersBox.append(initals);
-    //save button for high score
-    var saveInitials = document.createElement("button");
-    saveInitials.type= "submit"
-    answersBox.append(saveInitials);
+    //stop interval
+    clearInterval(window.myTimer);
     //clear other items
     inputBox.innerHTML='';
     disCheckEL.innerHTML = '';
+    //show screen to add high scores
+    submitScoreEl.classList.remove("hide");
     //click to save to local storage
-    saveInitials.addEventListener("click",function(){
+    var scoreBtn = document.querySelector("#submitScoreBtn")
+    scoreBtn.addEventListener("click",function(){
         var userIN = document.querySelector("textArea").value;
         console.log(userIN);
         highScoreStore(userIN, timeScore);  
@@ -166,6 +162,7 @@ function endQuiz() {
 var highScoreStore = function(userIN, timeScore){
     var score = timeScore;
     var user = userIN;
+    console.log("local storage" + userIN + score);
 
     //get top score info stored in local storage
     var scoreOne = localStorage.getItem("scoreOne");

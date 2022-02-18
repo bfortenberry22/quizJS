@@ -18,6 +18,20 @@
     display: flex;
     justify-content: space-around;
 }
+.count-down{
+    color:#082e68;
+}
+
+/* styling for the question box */
+.display-box{
+    text-align: center;
+    font-size: larger;
+}
+/* remove bullets from list */
+ul {
+    list-style: none;
+}
+
 /* styling for the "BEGIN" button */
 .btn {
     padding: 40px 100px;

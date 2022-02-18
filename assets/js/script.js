@@ -3,7 +3,8 @@ var beginButton = document.querySelector("#start-quiz");
 var questionBox = document.querySelector ("#question-box");
 var answersBox = document.querySelector("#answerChoices");
 var inputBox = document.querySelector("#userAns");
-var timeLeft = 600;
+var disCheckEL = document.querySelector("#rightOrWrong");
+var timeLeft = 60;
 
 
 //list of questions
@@ -27,9 +28,6 @@ var jsQuestions = [
 
 //main function to begin the quiz
 var quizBegin= function (){
-    //alert user the quiz is about to start
-    alert("The quiz is about to begin!");
-
     //remove Begin Button
     beginButton.remove();
 
@@ -72,13 +70,12 @@ var quizTime = function(questionNum){
         var checkAnswer = function (){
             var inputAns = document.querySelector("select[name='selected']").value;
             var correct = jsQuestions[questionNum].correctAns;
-            console.log("User's anser:" + inputAns);
-            console.log("Correct Answer: " + correct);
+            // console.log("User's anser:" + inputAns);
+            // console.log("Correct Answer: " + correct);
             if (inputAns === correct){
-                console.log("correct");
+                disCheckEL.innerHTML = "The last answer was...CORRECT!";
             }
             else {
-                console.log("wrong")
                 wrongAnswer();
             };
 
@@ -92,7 +89,7 @@ var quizTime = function(questionNum){
         
         
     } else{
-        return;
+        endQuiz();
     }
 };  
 
@@ -117,32 +114,121 @@ var userInput = function(questionNum){
  
 // function to display time
 var timeKeeper =function (){ 
-    display=document.querySelector("#count-down");
+    display=document.querySelector(".count-down");
     setInterval(function(){
         if(timeLeft>0){
             timeLeft = timeLeft -1;
             var minLeft = Math.floor(timeLeft/60);
-            console.log(minLeft);
+            // console.log(minLeft);
             var secLeft = timeLeft % 60
             var disTime = minLeft + ":" + secLeft;
             display.innerHTML = disTime;
+            return timeLeft;
         }else{
-            alert("TIME IS UP!")
+            endQuiz(0);
         }
     }, 1000)
 };
-//function to deduct time
+
+//when wrong answer is chosen time is deducted and user is notified
 var wrongAnswer=function(){
     timeLeft = timeLeft-10;
+    disCheckEL.innerHTML = "The last answer was...WRONG!"
 }
 
 //function to end quiz and submit score
-// function endQuiz() {
-// }
+function endQuiz() {
+    var timeScore = timeLeft;
+    console.log(timeScore);
+    questionBox.innerHTML='FINSHED!';
+    answersBox.innerHTML = 'Please enter you initials to save your score.';
+    //text area for initials
+    var initals = document.createElement("textArea");
+    initals.className="userID";
+    answersBox.append(initals);
+    //save button for high score
+    var saveInitials = document.createElement("button");
+    saveInitials.type= "submit"
+    answersBox.append(saveInitials);
+    //clear other items
+    inputBox.innerHTML='';
+    disCheckEL.innerHTML = '';
+    //click to save to local storage
+    saveInitials.addEventListener("click",function(){
+        var userIN = document.querySelector("textArea").value;
+        console.log(userIN);
+        highScoreStore(userIN, timeScore);  
+    });
+    //return timeScore;
+}
 
 //function to store high scores
-var highScoreStore = function(){
+var highScoreStore = function(userIN, timeScore){
+    var score = timeScore;
+    var user = userIN;
 
+    //get top score info stored in local storage
+    var scoreOne = localStorage.getItem("scoreOne");
+    if(!scoreOne){scoreOne=0};
+    var nameOne = localStorage.getItem("nameOne")
+    var scoreTwo = localStorage.getItem("scoreTwo");
+    if(!scoreTwo){scoreTwo=0};
+    var nameTwo = localStorage.getItem("nameTwo")
+    var scoreThree = localStorage.getItem("scoreThree");
+    if(!scoreThree){scoreThree=0};
+    var nameThree = localStorage.getItem("nameThree")
+    var scoreFour = localStorage.getItem("scoreFour");
+    if(!scoreFour){scoreFour=0};
+    var nameFour = localStorage.getItem("nameFour")
+    var scoreFive = localStorage.getItem("scoreFive");
+    if(!scoreFive){scoreFive=0};
+    var nameFive = localStorage.getItem("nameFive")
+
+    //replace info in local storage if score is beat
+    if(score < scoreOne){
+        //move down previous scores
+        localStorage.setItem("scoreFive", scoreFour);
+        localStorage.setItem("nameFive", nameFour);
+        localStorage.setItem("scoreFour", scoreThree);
+        localStorage.setItem("nameFour", nameThree);
+        localStorage.setItem("scoreThree", scoreTwo);
+        localStorage.setItem("nameThree", nameTwo);
+        localStorage.setItem("scoreTwo", scoreOne);
+        localStorage.setItem("nameTwo", nameTwo);
+        //add new high score to #1 spot
+        localStorage.setItem("scoreOne", score);
+        localStorage.setItem("nameOne", user);
+    } else if(score< scoreTwo){
+        localStorage.setItem("scoreFive", scoreFour);
+        localStorage.setItem("nameFive", nameFour);
+        localStorage.setItem("scoreFour", scoreThree);
+        localStorage.setItem("nameFour", nameThree);
+        localStorage.setItem("scoreThree", scoreTwo);
+        localStorage.setItem("nameThree", nameTwo);
+        //add new high score to #2 spot
+        localStorage.setItem("scoreTwo", score);
+        localStorage.setItem("nameTwo", user);
+    }else if(score < scoreThree){
+        localStorage.setItem("scoreFive", scoreFour);
+        localStorage.setItem("nameFive", nameFour);
+        localStorage.setItem("scoreFour", scoreThree);
+        localStorage.setItem("nameFour", nameThree);
+        //add new high score to #3 spot
+        localStorage.setItem("scoreThree", score);
+        localStorage.setItem("nameThree", user);
+    }else if(score < scoreFour){
+        localStorage.setItem("scoreFive", scoreFour);
+        localStorage.setItem("nameFive", nameFour);
+        //add new high score to #4 spot
+        localStorage.setItem("scoreThree", score);
+        localStorage.setItem("nameThree", user);
+    }else if(score < scoreFive){
+        localStorage.setItem("scoreFive", scoreFour);
+        localStorage.setItem("nameFive", nameFour);
+        //add new high score to #5 spot
+        localStorage.setItem("scoreFive", score);
+        localStorage.setItem("nameFive", user);
+    }else{return};
 };
 
 //eventLister to begin quiz

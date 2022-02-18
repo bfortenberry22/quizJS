@@ -113,7 +113,6 @@ var userInput = function(questionNum){
     inputBox.append(userChoices); 
 };
 
- 
 // function to display time
 var timeKeeper =function (){
     window.myTimer = setInterval(function(){
@@ -158,28 +157,33 @@ function endQuiz() {
     //return timeScore;
 }
 
+//get top score info stored in local storage
+var getScores = function(){
+
+    scoreOne = localStorage.getItem("scoreOne");
+    if(!scoreOne){scoreOne=0};
+    nameOne = localStorage.getItem("nameOne")
+    scoreTwo = localStorage.getItem("scoreTwo");
+    if(!scoreTwo){scoreTwo=0};
+    nameTwo = localStorage.getItem("nameTwo")
+    scoreThree = localStorage.getItem("scoreThree");
+    if(!scoreThree){scoreThree=0};
+    nameThree = localStorage.getItem("nameThree")
+    scoreFour = localStorage.getItem("scoreFour");
+    if(!scoreFour){scoreFour=0};
+    nameFour = localStorage.getItem("nameFour")
+    scoreFive = localStorage.getItem("scoreFive");
+    if(!scoreFive){scoreFive=0};
+    nameFive = localStorage.getItem("nameFive")
+};
+   
 //function to store high scores
 var highScoreStore = function(userIN, timeScore){
     var score = timeScore;
     var user = userIN;
     console.log("local storage" + userIN + score);
 
-    //get top score info stored in local storage
-    var scoreOne = localStorage.getItem("scoreOne");
-    if(!scoreOne){scoreOne=0};
-    var nameOne = localStorage.getItem("nameOne")
-    var scoreTwo = localStorage.getItem("scoreTwo");
-    if(!scoreTwo){scoreTwo=0};
-    var nameTwo = localStorage.getItem("nameTwo")
-    var scoreThree = localStorage.getItem("scoreThree");
-    if(!scoreThree){scoreThree=0};
-    var nameThree = localStorage.getItem("nameThree")
-    var scoreFour = localStorage.getItem("scoreFour");
-    if(!scoreFour){scoreFour=0};
-    var nameFour = localStorage.getItem("nameFour")
-    var scoreFive = localStorage.getItem("scoreFive");
-    if(!scoreFive){scoreFive=0};
-    var nameFive = localStorage.getItem("nameFive")
+    getScores();
 
     //replace info in local storage if score is beat
     if(score < scoreOne){
@@ -227,6 +231,40 @@ var highScoreStore = function(userIN, timeScore){
         localStorage.setItem("nameFive", user);
     }else{return};
 };
+//function to display scores
+
+var showScores = function(){
+    console.log("the button has been placed");
+    //need to hide other info
+    getScores();
+    //display 1st place
+    firstPlaceEl = document.querySelector("#firstPlace");
+    var disFirst = nameOne +" - "+ scoreOne;
+    console.log(disFirst)
+    firstPlaceEl.innerHTML= "1. " + disFirst;
+    //display 2nd place
+    secondPlaceEl = document.querySelector("#secondPlace");
+    var disSecond = nameTwo +" - "+ scoreTwo;
+    secondPlaceEl.innerHTML= "2. " + disSecond;
+    //display 3rd place
+    thirdPlaceEl = document.querySelector("#thirdPlace");
+    var disThird = nameThree +" - "+ scoreThree;
+    thirdPlaceEl.innerHTML= "3. " + disThird;
+    //display 4th place
+    fourthPlaceEl = document.querySelector("#fourthPlace");
+    var disFourth = nameFour +" - "+ scoreFour;
+    fourthPlaceEl.innerHTML= "4. " + disFourth;
+    //display 5th place
+    fifthPlaceEl = document.querySelector("#fifthPlace");
+    var disFifth = nameFive +" - "+ scoreFive;
+    fifthPlaceEl.innerHTML= "5. " + disFifth;
+}
+
+//high score button to be clicked
+var scoreBtn = document.querySelector("#high-scores");
+scoreBtn.addEventListener("click", showScores);
+
+
 
 //eventLister to begin quiz
 beginButton.addEventListener("click", quizBegin);

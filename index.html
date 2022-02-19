@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>JavaScript Quiz</title>
 </head>
 <body>
@@ -12,22 +13,30 @@
 
     <!-- info line to link high score and time -->
     <div class="info-line">
-        <button id="high-scores">View High Scores</button>
+        <!-- <button type="button" class="btn btn-outline-info btn-sm" id="high-scores">View High Scores</button> -->
+        <button type="button" class= "btn btn-link" id="high-scores" >View High Scores</button>
         <div class = "time-box">
-            <h2 id= "time-keeper">Time: </h2>
+            <h2 id= "time-keeper" class= "hide">Time: </h2>
             <h2 class="count-down" id= "timer"></h2>
         </div>
     </div>
 
-    <!-- Begin Button -->
-    <div class="beginButtonBox">
-        <button class="btn" id="start-quiz" >BEGIN!</button>
+    <!-- Directtion/ Begin Button -->
+    <div class="introBox">
+        <ul class="directions text-center">
+            <h3>Directions:</h3>
+            <p>Test your JavaScript knowledge with JavaScript Quiz.</p>
+            <P>Try to answer all the questions before the time runs out.</p>
+             <p>Beware! You will lose time for incorrect answers!</p>
+        </ul>
+        <div class="beginButtonBox beginBtn">
+            <button type="button" class="btn btn-success btn-lg" id="start-quiz" >BEGIN!</button>
+        </div>
     </div>
-
     <!-- Dispay the question and answer choices -->
     <div class = "display-box">
         <!-- question box -->
-        <div class = "question-display" id= "question-box"></div>
+        <h4 class = "question-display" id= "question-box"></h4>
         <!-- list answer choices -->
         <ul id="answerChoices"></ul>
         <!-- Disply the dropdown and submit button -->
@@ -36,21 +45,24 @@
     </div>
 
     <!-- Page to submit score -->
-    <div class = "submitScore">
-        <h1>Finished!</h1>
+    <div class = "submitScore text-center hide">
+        <h1 class="sub-title">Finished!</h1>
         <h2>Enter your initials to save your score.</h2>
         <textarea class= "initials"></textarea>
-        <button type="submit" id = "submitScoreBtn"></button>
+        <div>
+            <button type="button" class="btn btn-secondary" id = "submitScoreBtn">Submit</button>
+        </div>
     </div>
 
     <!-- Score board -->
-    <div class = "scoreBoard">
-        <h1>Leader Board</h1>
+    <div class = "scoreBoard text-center hide">
+        <h1 class="sub-title">Leader Board</h1>
         <h2 id ="firstPlace"></h2>
-        <h2 id = "secondPlace">2. </h2>
-        <h2 id = "thirdPlace">3. </h2>
-        <h2 id = "fourthPlace">4. </h2>
-        <h2 id = "fifthPlace">5. </h2>
+        <h2 id = "secondPlace"></h2>
+        <h2 id = "thirdPlace"></h2>
+        <h2 id = "fourthPlace"></h2>
+        <h2 id = "fifthPlace"></h2>
+        <button type="button" class="btn btn-secondary" id="doneBtn">Done</button>
     </div>
 
     <script src="assets/js/script.js"></script>

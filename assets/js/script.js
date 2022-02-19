@@ -1,4 +1,5 @@
 //link items to html
+var introBoxEl = document.querySelector(".introBox")
 var beginButton = document.querySelector("#start-quiz");
 var questionBox = document.querySelector ("#question-box");
 var answersBox = document.querySelector("#answerChoices");
@@ -6,6 +7,11 @@ var inputBox = document.querySelector("#userAns");
 var disCheckEL = document.querySelector("#rightOrWrong");
 var disTimer = document.querySelector(".count-down");
 var submitScoreEl = document.querySelector(".submitScore");
+var directionEl = document.querySelector(".directions");
+var timerEl = document.querySelector("#time-keeper");
+var scoreBoardEl = document.querySelector(".scoreBoard");
+var scoreBtn = document.querySelector("#high-scores");
+var displayBoxEl = document.querySelector(".display-box");
 var timeLeft = 60;
 
 
@@ -30,8 +36,12 @@ var jsQuestions = [
 
 //main function to begin the quiz
 var quizBegin= function (){
-    //remove Begin Button
-    beginButton.remove();
+    //remove directions/Begin Button & high scores
+    introBoxEl.classList.add("hide");
+    //scoreBtn.classList.add("hide");
+
+    //add "time:"
+    timerEl.classList.remove("hide");
 
     // functiion to keep time
     timeKeeper();
@@ -143,8 +153,7 @@ function endQuiz() {
     //stop interval
     clearInterval(window.myTimer);
     //clear other items
-    inputBox.innerHTML='';
-    disCheckEL.innerHTML = '';
+    displayBoxEl.classList.add("hide");
     //show screen to add high scores
     submitScoreEl.classList.remove("hide");
     //click to save to local storage
@@ -153,6 +162,8 @@ function endQuiz() {
         var userIN = document.querySelector("textArea").value;
         console.log(userIN);
         highScoreStore(userIN, timeScore);  
+        submitScoreEl.classList.add("hide");
+        showScores();
     });
     //return timeScore;
 }
@@ -186,7 +197,7 @@ var highScoreStore = function(userIN, timeScore){
     getScores();
 
     //replace info in local storage if score is beat
-    if(score < scoreOne){
+    if(score > scoreOne){
         //move down previous scores
         localStorage.setItem("scoreFive", scoreFour);
         localStorage.setItem("nameFive", nameFour);
@@ -199,7 +210,7 @@ var highScoreStore = function(userIN, timeScore){
         //add new high score to #1 spot
         localStorage.setItem("scoreOne", score);
         localStorage.setItem("nameOne", user);
-    } else if(score< scoreTwo){
+    } else if(score > scoreTwo){
         localStorage.setItem("scoreFive", scoreFour);
         localStorage.setItem("nameFive", nameFour);
         localStorage.setItem("scoreFour", scoreThree);
@@ -209,7 +220,7 @@ var highScoreStore = function(userIN, timeScore){
         //add new high score to #2 spot
         localStorage.setItem("scoreTwo", score);
         localStorage.setItem("nameTwo", user);
-    }else if(score < scoreThree){
+    }else if(score > scoreThree){
         localStorage.setItem("scoreFive", scoreFour);
         localStorage.setItem("nameFive", nameFour);
         localStorage.setItem("scoreFour", scoreThree);
@@ -217,13 +228,13 @@ var highScoreStore = function(userIN, timeScore){
         //add new high score to #3 spot
         localStorage.setItem("scoreThree", score);
         localStorage.setItem("nameThree", user);
-    }else if(score < scoreFour){
+    }else if(score > scoreFour){
         localStorage.setItem("scoreFive", scoreFour);
         localStorage.setItem("nameFive", nameFour);
         //add new high score to #4 spot
         localStorage.setItem("scoreThree", score);
         localStorage.setItem("nameThree", user);
-    }else if(score < scoreFive){
+    }else if(score > scoreFive){
         localStorage.setItem("scoreFive", scoreFour);
         localStorage.setItem("nameFive", nameFour);
         //add new high score to #5 spot
@@ -232,11 +243,14 @@ var highScoreStore = function(userIN, timeScore){
     }else{return};
 };
 //function to display scores
-
 var showScores = function(){
-    console.log("the button has been placed");
-    //need to hide other info
+    //hide other info
+    introBoxEl.classList.add("hide");
+    displayBoxEl.classList.add("hide");
+    //stop timer
+    clearInterval(window.myTimer);
     getScores();
+    scoreBoardEl.classList.remove("hide");
     //display 1st place
     firstPlaceEl = document.querySelector("#firstPlace");
     var disFirst = nameOne +" - "+ scoreOne;
@@ -258,13 +272,17 @@ var showScores = function(){
     fifthPlaceEl = document.querySelector("#fifthPlace");
     var disFifth = nameFive +" - "+ scoreFive;
     fifthPlaceEl.innerHTML= "5. " + disFifth;
+
+    //functionality to the "done" button
+    doneButtonEl = document.querySelector("#doneBtn");
+    doneButtonEl.addEventListener("click", reset);
+}
+var reset = function(){
+    location.reload()
 }
 
 //high score button to be clicked
-var scoreBtn = document.querySelector("#high-scores");
 scoreBtn.addEventListener("click", showScores);
-
-
 
 //eventLister to begin quiz
 beginButton.addEventListener("click", quizBegin);

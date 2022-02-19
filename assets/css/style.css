@@ -1,49 +1,59 @@
+
+/* used to hide when not being used */
+.hide{
+    display:none;
+}
+
 /* styling for pg title */
 .page-title {
-    color: #082e68;
+    color: whitesmoke;
+    background-color: #082e68;
     margin: auto;
-    width: 50%;
+    width: 100%;
     font-size: 4.5rem;
     text-align: center;
 }
 
-/* styling for the information line */
+/* styling for subtitles "finished!' and "leader board" */
+.sub-title{
+    color: cornflowerblue;
+    margin: auto;
+    width: 50%;
+    font-size: 3.5rem;
+    text-align: center;
+    padding: 2rem;
+}
+/* styling for the information line: high scores and time */
 .info-line {
-    margin-inline: 2%;
+    width: 100%;
+    padding-inline: 2%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    background-color: #082e68;
+    color: cornflowerblue;
 }
 .time-box{
     display: flex;
     justify-content: space-around;
 }
-.count-down{
-    color:#082e68;
+/* styling for the intro box */
+.introBox{
+    padding: 2rem;
 }
-
+ul{
+    padding: 0;
+    list-style: none;
+}
+/* styling for the "BEGIN" button */
+.beginBtn {
+    display:flex;
+    margin: auto;
+    justify-content:center;
+  }
 /* styling for the question box */
 .display-box{
     text-align: center;
+    padding: 3rem;
     font-size: larger;
 }
-/* remove bullets from list */
-ul {
-    list-style: none;
-}
-
-/* styling for the "BEGIN" button */
-.btn {
-    padding: 40px 100px;
-    background: #082e68;
-    font-size: 2.2rem;
-    color:rgb(226, 224, 70);
-    border-radius: 12px;
-    margin: auto;
-    display:flex;
-    justify-content:space-around;
-  }
-  /* used to hide when not being used */
-  .hide{
-      display:none;
-  }

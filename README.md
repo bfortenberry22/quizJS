@@ -10,7 +10,10 @@ A timed quiz to test knowledge on JavaScript
 * Leader board is displayed at the end of each game
 * User can access leaderboard at any time, but this will cause the game to restart to prevent cheating
 ### Link:
-
+https://bfortenberry22.github.io/quizJS/
 
 ## Images:
 
+![image](/assets/images/landing.JPG)
+![image](/assets/images/question.JPG)
+![image](/assets/images/leaderboard.JPG)

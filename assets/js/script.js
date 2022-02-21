@@ -19,18 +19,28 @@ var timeLeft = 60;
 var jsQuestions = [
     {
         correctAns: "C",
-        question: "1. This is a question? The answer is C.",
-        answers: ['A. Option 1A', 'B. Option 1B', 'C. Option 1C', 'D. Option 1D'],
+        question: "1. A function that is used as an argument to another function is a __________.",
+        answers: ['A. event listener', 'B. sum function ', 'C. callback function', 'D. argumental function'],
     },
     {
         correctAns: "B",
-        question: "2. This is the second question? The answer is B.",
-        answers: ['A. Option A', 'B. Option B', 'C. Option C', 'D. Option D'],
+        question: "2. What needs to be added to observe an event?",
+        answers: ['A. Interval', 'B. Event Listener', 'C. Event Handler', 'D. Timeout'],
+    },
+    {
+        correctAns: "D",
+        question: "3. What is used for a function to repeat itself at a set interval?",
+        answers: ['A. intervalRepeat()', 'B. setTimeout()', 'C. repeatTime()', 'D. setInterval()'],
+    },
+    {
+        correctAns: "D",
+        question: "4. What is one way to access an element from the html?",
+        answers: ['A. document.querySelector()', 'B. document.getElementbyId()', 'C. class ="userInput"', 'D. Both A and B'],
     },
     {
         correctAns: "A",
-        question: "3. This is the Third question? The answer is C.",
-        answers: ['A. Option A', 'B. Option B', 'C. Option C', 'D. Option D'],
+        question: "5. The condition of an if /then statement is enclosed in __________.",
+        answers: ['A. parentheses', 'B. brackets', 'C. quotes', 'D. curly brakets'],
     },
 ]
 
@@ -82,8 +92,6 @@ var quizTime = function(questionNum){
         var checkAnswer = function (){
             var inputAns = document.querySelector("select[name='selected']").value;
             var correct = jsQuestions[questionNum].correctAns;
-            // console.log("User's anser:" + inputAns);
-            // console.log("Correct Answer: " + correct);
             if (inputAns === correct){
                 disCheckEL.innerHTML = "The last answer was...CORRECT!";
             }
@@ -148,10 +156,12 @@ var wrongAnswer=function(){
 //function to end quiz and submit score
 function endQuiz() {
     //save time
-    var timeScore = timeLeft +10;
+    var timeScore = timeLeft;
+    var disTime = "0:"+timeLeft;
+    disTimer.innerHTML = disTime;
     console.log(timeScore);
     //stop interval
-    clearInterval(window.myTimer);
+    clearInterval(window.myTimer)
     //clear other items
     displayBoxEl.classList.add("hide");
     //show screen to add high scores
@@ -165,7 +175,6 @@ function endQuiz() {
         submitScoreEl.classList.add("hide");
         showScores();
     });
-    //return timeScore;
 }
 
 //get top score info stored in local storage
